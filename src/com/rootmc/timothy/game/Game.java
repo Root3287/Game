@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import com.rootmc.timothy.game.entity.mob.player.Player;
 import com.rootmc.timothy.game.graphics.Screen;
 import com.rootmc.timothy.game.input.Keyboard;
+import com.rootmc.timothy.game.input.Mouse;
 import com.rootmc.timothy.game.level.Level;
 import com.rootmc.timothy.game.level.SpawnLevel;
 
@@ -47,6 +48,7 @@ public class Game extends Canvas implements Runnable{
 	// Main constructor for game
 
 	public Game(){
+		Mouse mouse = new Mouse();
 		Dimension size = new Dimension(width*scale, height*scale);
 		setPreferredSize(size);
 		
@@ -55,8 +57,11 @@ public class Game extends Canvas implements Runnable{
 		level = new SpawnLevel("/images/new/Level/SpawnLevel.png");
 		
 		key = new Keyboard();
-		addKeyListener(key);
 		player = new Player(XSpawn*16,YSpawn*16,key);
+		player.init(level);
+		addKeyListener(key);
+		addMouseListener(mouse);
+		addMouseMotionListener(mouse);
 	}
 
 	// This is called when the game starts
@@ -146,6 +151,9 @@ public class Game extends Canvas implements Runnable{
 		g.drawString("Version: Alpha 0.0.3", 0, 25);
 		g.drawString("X:"+player.x+" Y: "+player.y, 0, 45);
 		g.drawString("Project Page: http://timothy.rootmc.com", 0, 35);
+		
+		g.drawRect(Mouse.getX(), Mouse.getY(), 32, 32);
+		
 		g.dispose();
 		bs.show();
 		
@@ -161,7 +169,7 @@ public class Game extends Canvas implements Runnable{
 		//System.out.println(info+" System.getProperty('java.vendor) == "+System.getProperty("java.vendor")+";");
 		//System.out.println(info+" System.getProperty('sun.arch.data.model') == "+System.getProperty("sun.arch.data.model")+";");
 		Game game = new Game();
-		game.frame.setResizable(false);
+		game.frame.setResizable(true);
 		//game.frame.setTitle("Game");
 		game.frame.setAlwaysOnTop(false);
 		game.frame.add(game);

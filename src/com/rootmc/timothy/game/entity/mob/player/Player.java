@@ -29,6 +29,7 @@ public class Player extends Mob{
 		if(input.down)ya++;
 		if(input.left)xa--;
 		if(input.right)xa++;
+		if(input.exit)System.exit(1);
 		
 		if(xa!=0||ya!=0){walking = true; move(xa,ya);}else{walking=false;}
 	}
